@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Build;
+import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 
@@ -30,13 +31,12 @@ public class MusicControlAudioFocusListener implements AudioManager.OnAudioFocus
             abandonAudioFocus();
             mPlayOnAudioFocus = false;
             emitter.onStop();
-        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT 
+        || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
             if (MusicControlModule.INSTANCE.isPlaying()) {
                 mPlayOnAudioFocus = true;
                 emitter.onPause();
             }
-        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
-            volume.setCurrentVolume(40);
         } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
             if (volume.getCurrentVolume() != 100) {
                 volume.setCurrentVolume(100);
@@ -45,6 +45,8 @@ public class MusicControlAudioFocusListener implements AudioManager.OnAudioFocus
                 emitter.onPlay();
             }
             mPlayOnAudioFocus = false;
+        } else {
+          Log.d("MusicControl_AudioFocusChange", "AudioFocus Change Unknown: " + focusChange);
         }
     }
 
