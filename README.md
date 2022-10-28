@@ -30,7 +30,7 @@ npm install react-native-music-control --save
 1. `pod install --project-directory=ios/`
 1. Enable Audio Background mode in XCode project settings
 
-![XCode bqckground mode enabled](https://user-images.githubusercontent.com/263097/28630866-beb84094-722b-11e7-8ed2-b495c9f37956.png)
+![XCode background mode enabled](https://user-images.githubusercontent.com/263097/28630866-beb84094-722b-11e7-8ed2-b495c9f37956.png)
 
 ## Android
 
@@ -216,13 +216,13 @@ componentDidMount() {
     MusicControl.enableBackgroundMode(true);
 
     // on iOS, pause playback during audio interruptions (incoming calls) and resume afterwards.
-    // As of {{ INSERT NEXT VERSION HERE}} works for android aswell.
+    // As of {{ INSERT NEXT VERSION HERE}} works for android as well.
     MusicControl.handleAudioInterruptions(true);
 
     MusicControl.on(Command.play, ()=> {
       this.props.dispatch(playRemoteControl());
     })
-    
+
     // on iOS this event will also be triggered by audio router change events
     // happening when headphones are unplugged or a bluetooth audio peripheral disconnects from the device
     MusicControl.on(Command.pause, ()=> {
@@ -283,7 +283,7 @@ componentDidMount() {
 
 ```
 MusicControl.on(Command.play, () => {
-  // A valid funcion must be present
+  // A valid function must be present
   player.play()
 })
 ```
